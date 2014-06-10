@@ -4,12 +4,20 @@ import sys
 import machine_learning as ml
 
 MODE = sys.argv[1]
-ALGORITHM = sys.argv[2]
-INPUT_FILE = open(sys.argv[3], 'r')
-PROGRAM = sys.argv[4]
 
-if ALGORITHM == 'zero_rules':
-  ml.zero_rules(INPUT_FILE, PROGRAM)
+if MODE == 'train':
+  algorithm = sys.argv[2]
+  input_file = open(sys.argv[3], 'r')
+  program = sys.argv[4]
 
-INPUT_FILE.close()
+  if algorithm == 'zero_rules':
+    ml.zero_rules(input_file, program)
+
+  input_file.close()
+
+elif MODE == 'test':
+  program = sys.argv[2]
+  test_file = open(sys.argv[3], 'r')
+
+  test_file.close()
 

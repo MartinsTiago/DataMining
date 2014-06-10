@@ -2,7 +2,20 @@
 
 def zero_rules (input_file, program):
   name, attributes, classes, data = read_file(input_file)
-  print name, attributes, classes, data
+  class_count = []
+
+  for klass in classes:
+    class_count.append(0)
+
+  for value in data:
+    for index, klass in enumerate(classes):
+      if value[0] == klass:
+        class_count[index] += 1
+
+  zero_rules_class = classes[class_count.index(max(class_count))]
+
+  print zero_rules_class
+
 
 def read_file(input_file):
   attributes = []
@@ -29,8 +42,7 @@ def read_file(input_file):
         data_values.append(line.split(',')[0:len(attributes)])
         data_classes.append(line.split(',')[len(attributes)].rstrip('\n'))
 
-      for index, value in enumerate(data_classes):
-        data.append([value, data_values[index]])
-
+  for index, value in enumerate(data_classes):
+    data.append([value, data_values[index]])
 
   return name, attributes, classes, data
