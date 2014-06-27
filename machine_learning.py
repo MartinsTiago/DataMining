@@ -14,31 +14,40 @@ def zero_rules (input_file, program):
 
   zero_rules_class = classes[class_count.index(max(class_count))]
 
+  print name
+  print attributes
+  print classes
+  print data
   print zero_rules_class
 
 
 def read_file(input_file):
   attributes = []
+  attributes_type = []
   classes = []
   final_data = []
   data = []
   data_values = []
   data_classes = []
+  flag = 0
 
   name = input_file.readline().rstrip('\n')
 
   for line in input_file:
 
-    if line != '@dados\n':
+    if line != '@dados\n' and flag == 0:
 
-      if(line.split(',')[1] == 'real\n'):
-        attributes.append(line.split(',')[0])
-
-      elif(line.split(',')[1] == 'nominal'):
+      if(line.split(',')[0] == 'classe'):
         classes = line.split(',')[2:-1]
         classes.append(line.split(',')[-1].rstrip('\n'))
 
       else:
+        attributes.append(line.split(',')[0])
+        attributes_type.append(line.split(',')[1].rstrip('\n'))
+
+    else:
+      flag = 1
+      if line != '@dados\n':
         data_values.append(line.split(',')[0:len(attributes)])
         data_classes.append(line.split(',')[len(attributes)].rstrip('\n'))
 
